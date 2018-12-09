@@ -1,4 +1,7 @@
 <?php
+	
+	include 'Test.php';
+
     //获得参数 signature nonce token timestamp echostr
     $nonce     = $_GET['nonce'];
     $token     = 'haha';
@@ -35,7 +38,7 @@ else{
                 $fromUser = $postObj->ToUserName;
                 $time     = time();
                 $msgType  =  'text';
-                $content  = '欢迎关注我们的微信公众账号,此公众号为测试公众号！';
+                $content  = '欢迎关注我们的微信公众账号'.$postObj->FromUserName.'-'.$postObj->ToUserName;
                 $template = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
@@ -50,25 +53,18 @@ else{
       
       //判断该数据包是否是文本消息
         if( strtolower( $postObj->MsgType) == 'text'){
-             //接受文本信息
-    		$content = $postObj->Content;
-             //回复用户消息(纯文本格式)
+                //接受文本信息
+    			$content = $postObj->Content;
+             	//回复用户消息(纯文本格式)
                 $toUser   = $postObj->FromUserName;
                 $fromUser = $postObj->ToUserName;
                 $time     = time();
                 $msgType  =  'text';
-                $content  = '【'.$content.'预报】
-2013年7月10日 18时发布
-
-实时天气
-晴 30℃~38℃ 南风3-4级
-温馨提示：天气炎热，建议着短袖、短裙、短衫、薄型T恤衫等清凉夏季服装。
-
-明天
-晴 30℃~36℃ 南方3-4级
-
-后天
-晴转多云 28℃~35℃ 东南风4-5级转5-6级';
+          		
+          		
+          		$get_class = new Test();
+				$content  = $get_class->getWeather($content);
+          
                 $template = "<xml>
                                 <ToUserName><![CDATA[%s]]></ToUserName>
                                 <FromUserName><![CDATA[%s]]></FromUserName>
